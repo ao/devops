@@ -118,12 +118,13 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
-  name: example-app
+  name: frontend
+  namespace: apps
 spec:
   tls:
     - hosts:
         - tls-test.dev.ao.ms
-      secretName: example-app-tls
+      secretName: frontend-tls
   rules:
     - host: tls-test.dev.ao.ms
       http:
@@ -132,7 +133,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: example-service
+                name: frontend
                 port:
                   number: 80
 EOF
@@ -140,16 +141,16 @@ EOF
 
 ## Issue Certificate
 ```
-cat <EOF | kubectl apply -f -
+cat <<EOF | kubectl apply -f -
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: example-app
-  namespace: default
+  name: frontend
+  namespace: apps
 spec:
   dnsNames:
     - tls-test.dev.ao.ms
-  secretName: example-app-tls
+  secretName: frontend-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
     kind: ClusterIssuer
