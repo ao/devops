@@ -1,3 +1,3 @@
-# Learning K8S
+# AO - DevOps
 
-This repo is for learning K8S
+This repo holds quick starts/cheats to DevOps things
