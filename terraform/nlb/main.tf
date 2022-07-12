@@ -12,8 +12,13 @@ resource "aws_lb" "test" {
 }
 
 resource "aws_lb_target_group" "test" {
-  name     = "tf-example-nlb-tg"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = data.aws_vpc.default.id
+  name        = "tf-example-nlb-tg"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = data.aws_vpc.default.id
+}
+
+resource "aws_lb_target_group_attachment" "nlb-attach" {
+  target_group_arn = aws_lb_target_group.test.arn
+  target_id        = aws_lb.test.id
 }
