@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "af-south-1"
+}
+
 resource "aws_vpc" "cluster_vpc"{
   cidr_block = cidrsubnet("172.20.0.0/16",0,0)
   tags={
@@ -276,5 +280,4 @@ resource "aws_eks_node_group" "eks_cluster_nodegroup_ondemand_tainted" {
 
 output "access_cluster" {
   value = "To access the cluster, run 'aws eks --region af-south-1 update-kubeconfig --name ${aws_eks_cluster.cluster.name}'"
-
 }
